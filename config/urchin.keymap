@@ -5,6 +5,8 @@
  */
 
 #include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
 #include <dt-bindings/zmk/keys.h>
 
 // Layer definitions
@@ -45,50 +47,60 @@
     macros {
         // sometimes my device thinks a modifier is being held down
         // pressing all modifiers fixes it.
-
-        unstick: unstick {
-            label = "ZM_unstick";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LSHIFT &kp RSHIFT &kp LCTRL &kp RCTRL &kp LALT &kp RALT &kp LGUI &kp RGUI>;
-        };
     };
 
     combos {
         compatible = "zmk,combos";
 
         // both right thumb keys
-
-        combo_accent {
-            timeout-ms = <200>;
-            key-positions = <32 33>;
-            bindings = <&mo 0>;
-        };
-
         // internal-left & external-right thumb keys
-
-        combo_sym2 {
-            timeout-ms = <200>;
-            key-positions = <31 33>;
-            bindings = <&mo 0>;
-        };
-
         // both left thumb keys
-
-        combo_settings {
-            timeout-ms = <200>;
-            key-positions = <30 31>;
-            bindings = <&mo 0>;
-        };
-
         // left index & middle fingers (home-row)
         // hold control & space for Adobe workflow
 
-        combo_ctrl_space {
-            timeout-ms = <200>;
+        Escape {
+            bindings = <&kp ESCAPE>;
+            key-positions = <0 1>;
+        };
+
+        Tab {
+            bindings = <&kp TAB>;
+            key-positions = <2 3>;
+        };
+
+        Enter {
+            bindings = <&kp ENTER>;
             key-positions = <12 13>;
-            bindings = <&kp LC(SPACE)>;
-            layers = <0>;
+        };
+
+        Stiky_Layer_2 {
+            bindings = <&sl 2>;
+            key-positions = <31 30>;
+        };
+
+        Alpha {
+            bindings = <&to 0>;
+            key-positions = <20 21>;
+        };
+
+        Control {
+            bindings = <&kp LEFT_CONTROL>;
+            key-positions = <11 10>;
+        };
+
+        Delete {
+            bindings = <&kp DEL>;
+            key-positions = <4 3>;
+        };
+
+        Backspace {
+            bindings = <&kp BACKSPACE>;
+            key-positions = <13 14>;
+        };
+
+        Right_Control {
+            bindings = <&kp RIGHT_CONTROL>;
+            key-positions = <15 16>;
         };
     };
 
@@ -97,37 +109,37 @@
 
         // Base alpha layer
 
-        default_layer {
-            label = "Base";
+        Alpha {
+            label = "Alpha";
             bindings = <
-&kp Q    &kp W    &kp F    &kp P    &kp G               &kp Y            &kp U        &kp I        &kp O      &kp SEMICOLON
-&kp A    &kp R    &kp S    &kp T    &kp D               &kp H            &kp N        &kp E        &kp I      &kp O
-&kp Z    &kp X    &kp C    &kp V    &kp B               &kp K            &kp M        &kp COMMA    &kp DOT    &kp SLASH
-                           &sl 1    &qt LSHIFT SPACE    &kp BACKSPACE    &kp SPACE
+&kp Q             &kp W    &kp F    &kp P    &kp G         &kp J            &kp L        &kp U        &kp Y      &kp SEMICOLON
+&mt LEFT_WIN A    &kp R    &kp S    &kp T    &kp D         &kp H            &kp N        &kp E        &kp I      &kp O
+&kp Z             &kp X    &kp C    &kp V    &kp B         &kp K            &kp M        &kp COMMA    &kp DOT    &mt BACKSLASH SLASH
+                                    &sl 1    &sk LSHIFT    &kp BACKSPACE    &kp SPACE
             >;
         };
 
         // Numbers and high frequency symbols
 
-        sym_layer {
-            label = "Sym.";
+        Numbers {
+            label = "Numbers";
             bindings = <
-&kp N1          &kp N2         &kp N3         &kp N4         &kp N5         &kp N6        &kp N7         &kp N8          &kp N9          &kp N0
-&kp NUMBER_6    &kp IT_USD     &kp IT_LPAR    &kp IT_LBRC    &kp IT_LBKT    &kp IT_EQL    &kp IT_QUES    &kp IT_SQUOT    &kp IT_MINUS    &kp IT_AST
-&kp IT_GREAT    &kp IT_PERC    &kp IT_RPAR    &kp IT_RBRC    &kp IT_RBKT    &kp IT_AT     &kp IT_EXCL    &kp IT_DQUOT    &kp IT_PLUS     &kp IT_FSLH
-                                              &mo 0          &mo 0          &trans        &trans
+&kp N1          &kp N2         &kp N3         &kp N4         &kp N5            &kp TILDE          &kp LEFT_PARENTHESIS    &kp RIGHT_PARENTHESIS    &kp LEFT_BRACKET    &kp RIGHT_BRACKET
+&kp NUMBER_6    &kp N7         &kp N8         &kp N9         &kp N0            &kp EXCLAMATION    &kp EQUAL               &kp UP_ARROW             &key_repeat         &mt HASH APOS
+&kp IT_GREAT    &kp IT_PERC    &kp IT_RPAR    &kp IT_RBRC    &kp IT_RBKT       &kp IT_AT          &kp LEFT_ARROW          &kp DOWN                 &kp RIGHT           &mt PIPE MINUS
+                                              &none          &sk LEFT_SHIFT    &kp BACKSPACE      &kp ENTER
             >;
         };
 
         // Main modifiers and arrow keys
 
         ext_layer {
-            label = "Mods";
+            label = "Func";
             bindings = <
-&kp ESC      &kp C_PREV    &kp C_PP      &kp C_NEXT    &kp C_PAUSE    &kp PG_UP       &kp HOME    &kp UP      &kp END      &kp CAPS
-&sk LALT     &sk LGUI      &sk LSHIFT    &sk LCTRL     &kp RALT       &kp PG_DN       &kp LEFT    &kp DOWN    &kp RIGHT    &kp DEL
-&kp LC(Z)    &kp LC(X)     &kp LC(C)     &kp TAB       &kp LC(V)      &kp LC(BSPC)    &kp BSPC    &trans      &trans       &trans
-                                         &trans        &kp LCTRL      &kp ENTER       &mo 0
+&kp F1       &kp F2       &kp F3       &kp F4       &kp F5       &ext_power EP_ON    &ext_power EP_OFF    &none               &kp END      &bt BT_CLR
+&kp F6       &kp F7       &kp F8       &kp F9       &kp F10      &kp PG_DN           &kp C_VOLUME_UP      &kp K_CALCULATOR    &kp RIGHT    &kp C_AL_TASK_MANAGER
+&kp LC(Z)    &kp LC(X)    &kp LC(C)    &kp LC(V)    &kp LC(A)    &bt BT_NXT          &kp C_VOL_DN         &trans              &trans       &trans
+                                       &trans       &kp LCTRL    &kp ENTER           &mo 0
             >;
         };
 
