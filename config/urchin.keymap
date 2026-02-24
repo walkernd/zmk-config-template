@@ -25,6 +25,7 @@
     // don't release mods on other mods presses
 
     ignore-modifiers;
+    release-after-ms = <899>;
 };
 
 / {
